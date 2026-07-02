@@ -3,7 +3,7 @@ services:
     container_name: chat-universal-client
     image: ghcr.io/gipierogiglio-prog/chat-universal-client:latest
     ports:
-      - "3002:80"
+      - "3029:80"
     networks:
       - devgiglio-network
     restart: unless-stopped
