@@ -1,0 +1,39 @@
+trigger:
+  branches:
+    include:
+      - main
+
+variables:
+  - group: devgiglio-env
+  - group: devgiglio-secrets
+  - group: envs-cloudflare
+  - name: APP_NAME
+    value: chat-universal-client
+  - name: STACK
+    value: nginx-static
+  - name: DEPLOY_ENABLED
+    value: "true"
+  - name: TEST_ENABLED
+    value: "false"
+  - name: DOCS_ENABLED
+    value: "false"
+
+pool:
+  name: Default
+
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      name: gipierogiglio-prog/devgiglio-pipelines
+      ref: main
+      endpoint: gipierogiglio-prog
+
+stages:
+  - template: stages/build/nginx-static.yml@templates
+    parameters:
+      appName: chat-universal-client
+
+  - template: stages/deploy/deploy-vps.yml@templates
+    parameters:
+      appName: chat-universal-client
